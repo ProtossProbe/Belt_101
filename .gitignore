@@ -3,3 +3,13 @@
 tempCodeRunnerFile.py
 **/bin
 *.png
+*.dmp
+*.tmp
+*.clo
+*.gnu
+element6
+mercury6
+close6
+
+*.dSYM
+.vscode
