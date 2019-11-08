@@ -3,13 +3,15 @@
 tempCodeRunnerFile.py
 **/bin
 *.png
-*.dmp
-*.tmp
-*.clo
-*.gnu
-element6
-mercury6
-close6
+mercury/**/*.dmp
+mercury/**/*.tmp
+mercury/**/*.clo
+mercury/**/*.gnu
+mercury/**/*.out
+mercury/element6
+mercury/mercury6
+mercury/close6
+mercury/**/*
 
 *.dSYM
 .vscode

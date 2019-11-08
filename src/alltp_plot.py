@@ -10,7 +10,7 @@ def wrapTo360(phi):
 
 mpl.rcParams['lines.markersize'] = 1
 a_res = (4/3) ** (2/3) * 1
-
+folder = "11-06/"
 fig, axes = plt.subplots(2, 2)
 
 
@@ -48,5 +48,5 @@ def scatterPlot(ax, x, y, xlable, ylabel, title, xlim, ylim):
     ax.set_ylim(ylim[0], ylim[1])
 
 
-for name in ["alltp_1gyr.out"]:
+for name in [folder+"alltp_100myr.out"]:
     plotAlltp(name)

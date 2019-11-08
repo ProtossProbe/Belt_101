@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 
 total = 3000
+folder = "11-06/"
 fig, ax = plt.subplots()
 
 
@@ -14,7 +15,6 @@ def plotDiscard(name):
     while line:
         if line[1] == "P":
             line = file.readline()
-            print(line)
             discard_time.append(float(line))
         else:
             line = file.readline()
@@ -22,7 +22,7 @@ def plotDiscard(name):
     discard_time = np.sort(np.array(discard_time))
 
     ax.plot(discard_time, np.arange(len(discard_time)))
-    ax.loglog(discard_time, total-np.arange(len(discard_time)))
+    ax.semilogx(discard_time, total-np.arange(len(discard_time)))
     ax.plot([4.6E9, 4.6E9], [0, 3000], color='red')
     ax.plot([0, 4.6E9], [3000, 3000], color='red')
 
@@ -36,7 +36,7 @@ def plotDiscard(name):
     ax.grid(linestyle='dotted', which='minor')
 
 
-plotDiscard("discard_100myr.out")
-plotDiscard("discard_1gyr.out")
+plotDiscard(folder+"discard_300myr.out")
+plotDiscard(folder+"discard_1gyr.out")
 plt.savefig("{0:s}.png".format("discard_comparison2"))
 plt.show()
