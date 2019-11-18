@@ -113,7 +113,11 @@ def true2mean(theta, e):
     if (theta == 0.0):
         return 0.0
     E = 2 * np.arctan(np.sqrt((1 - e) / (1 + e)) * np.tan(theta / 2))
-    return (E - e * np.sin(E))
+    result = (E - e * np.sin(E))
+    if result < 0:
+        return result + 2*np.pi
+    else:
+        return result
 
 
 def mean2true(M, e):
