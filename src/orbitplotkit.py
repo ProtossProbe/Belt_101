@@ -86,23 +86,29 @@ def resonanceLocation(planet, p, q):
 
 def scatterPlot(ax, x, y, xlable, ylabel, title, xlim, ylim):
     sp = ax.scatter(x, y)
-    ax.set_xlabel(xlable)
-    ax.set_ylabel(ylabel)
-    ax.set_title(title)
-    ax.set_xlim(xlim[0], xlim[1])
-    ax.set_ylim(ylim[0], ylim[1])
+    setBasicLabels(ax, xlable, ylabel, title, xlim, ylim)
+    return sp
+
+
+def scatterPlotWithSize(ax, x, y, sz, xlable, ylabel, title, xlim, ylim):
+    sp = ax.scatter(x, y, s=sz)
+    setBasicLabels(ax, xlable, ylabel, title, xlim, ylim)
     return sp
 
 
 def scatterColorPlot(ax, x, y, c, xlable, ylabel, title, xlim, ylim):
     scp = ax.scatter(x, y, c=c, cmap=DEFAULT_CMAP,
                      norm=mpl.colors.LogNorm(vmin=1e6, vmax=1e9))
+    setBasicLabels(ax, xlable, ylabel, title, xlim, ylim)
+    return scp
+
+
+def setBasicLabels(ax, xlable, ylabel, title, xlim, ylim):
     ax.set_xlabel(xlable)
     ax.set_ylabel(ylabel)
     ax.set_title(title)
     ax.set_xlim(xlim[0], xlim[1])
     ax.set_ylim(ylim[0], ylim[1])
-    return scp
 
 
 def resonancePlot(ax, a_res, ylim, color):
@@ -120,3 +126,51 @@ def stdFourScatterPlot(axes, alltp, alim, elim, Ilim):
                 'e-omega', elim, (0, 360))
     scatterPlot(axes[1, 1], I, Ome, 'I', 'Omega',
                 'I-Omega', Ilim, (0, 360))
+
+
+def NEOSSatModelAEPlot(ax, grid, alim, elim):
+    a_step, e_step, I_step = 0.05, 0.02, 2
+
+    a_count = int((alim[1] - alim[0]) / a_step) + 1
+    a_start = int((alim[0]-0.025)/a_step) + 1
+    a_range = np.linspace(alim[0], alim[1], a_count)
+    a_left = alim[0]-a_step/2
+    a_right = alim[1]+a_step/2
+
+    e_count = int((elim[1] - elim[0]) / e_step) + 1
+    e_start = int((elim[0]-0.01)/e_step)
+    e_range = np.linspace(elim[0], elim[1], e_count)
+    e_left = elim[0]-e_step/2
+    e_right = elim[1]+e_step/2
+
+    heatmap = ax.imshow(grid, extent=[
+                        a_left, a_right, e_left, e_right], cmap=DEFAULT_CMAP)
+    cbar = ax.figure.colorbar(heatmap, ax=ax)
+
+    ax.set_xlabel("a")
+    ax.set_ylabel("e")
+    return heatmap
+
+
+def NEOSSatModelAIPlot(ax, grid, alim, Ilim):
+    a_step, e_step, I_step = 0.05, 0.02, 2
+
+    a_count = int((alim[1] - alim[0]) / a_step) + 1
+    a_start = int((alim[0]-0.025)/a_step) + 1
+    a_range = np.linspace(alim[0], alim[1], a_count)
+    a_left = alim[0]-a_step/2
+    a_right = alim[1]+a_step/2
+
+    I_count = int((Ilim[1] - Ilim[0]) / I_step) + 1
+    I_start = int((Ilim[0]-0.01)/I_step)
+    I_range = np.linspace(Ilim[0], Ilim[1], I_count)
+    I_left = Ilim[0]-I_step/2
+    I_right = Ilim[1]+I_step/2
+
+    heatmap = ax.imshow(grid, extent=[
+                        a_left, a_right, I_left, I_right], cmap=DEFAULT_CMAP)
+    cbar = ax.figure.colorbar(heatmap, ax=ax)
+
+    ax.set_xlabel("a")
+    ax.set_ylabel("I")
+    return heatmap

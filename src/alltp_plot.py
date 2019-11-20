@@ -27,5 +27,3 @@ def plotAlltp(name):
 
 for name in ["alltp_300myr"]:
     plotAlltp(folder+name+".out")
-
-plt.show()
