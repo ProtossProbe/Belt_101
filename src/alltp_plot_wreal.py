@@ -5,6 +5,7 @@ import matplotlib as mpl
 import orbitplotkit as opk
 
 folder = "11-06/"
+jpl_folder = "jpl_smdb/"
 
 
 def wrapTo360(phi):
@@ -52,7 +53,7 @@ def plotEMBelt(name):
 
 
 for name in [folder+"alltp_1gyr.out"]:
-    plotEMBelt("mercury/"+"em_region(<=5).csv")
+    plotEMBelt(jpl_folder+"em_region(<=5).csv")
     # plotAlltp(name)
 # fig.tight_layout()
 # plt.savefig("{0:s}.png".format(name))

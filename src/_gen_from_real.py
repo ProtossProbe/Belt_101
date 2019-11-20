@@ -4,8 +4,9 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 
 folder = "mercury/"
+jpl_folder = "jpl_smdb/"
 
-name = folder+"em_region_orbit(<=5).csv"
+name = jpl_folder+"em_region_orbit(<=5).csv"
 data = np.genfromtxt(name, delimiter=',',
                      skip_header=1, usecols=(1, 2, 3, 4, 5, 6, 9))
 a, e, I, ome, Ome, M, epoch = data[:, 0], data[:, 1], data[:, 2], \
