@@ -52,13 +52,16 @@ rm-gen:
 rm-in:
 	rm -f $(EXEC)/*.in 2> /dev/null
 
-clean:
+allclean:
 	rm -f $(EXEC)/{ *.dmp *.clo *.out *.tmp *.aei} 2> /dev/null
 	rm -Rf ${EXEC}/*.dSYM 2> /dev/null
 	rm -f $(BIN)/element6 $(BIN)/close6 $(BIN)/mercury6
 
+clean:
+	rm -f $(EXEC)/{ *.dmp *.clo *.out *.tmp *.aei} 2> /dev/null
+	rm -Rf ${EXEC}/*.dSYM 2> /dev/null
+
 run:
 	./mercury6
 	./element6
-	./close6
 # --- end ---

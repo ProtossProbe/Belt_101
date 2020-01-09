@@ -5,10 +5,10 @@
 )---------------------------------------------------------------------
 ) 1 year = 365.25 days
  algorithm (MVS, BS, BS2, RADAU, HYBRID etc) = HYBRID
- start time (days)= 2458651.5d0
- stop time (days) = 365.25d4
+ start time (days)= 2458856.5d0
+ stop time (days) = 365.25d5
  output interval (days) = 365.25d0
- timestep (days) = 0.5d0
+ timestep (days) = .5d0
  accuracy parameter= 1.d-12
 )---------------------------------------------------------------------
 ) Integration options:

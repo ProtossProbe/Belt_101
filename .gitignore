@@ -4,7 +4,8 @@
 tempCodeRunnerFile.py
 **/bin
 *.png
-mercury/element6
-mercury/mercury6
-mercury/close6
+element6
+mercury6
+close6
 mercury/**/*
+vatira/**/*
