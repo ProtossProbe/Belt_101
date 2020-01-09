@@ -2,9 +2,14 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
+import matplotlib.colors as colors
+
 
 # Constants for plotting
 DEFAULT_CMAP = "RdYlBu"
+CMAP_START = 0.2
+CMAP_END = 1.0
+CMAP_BIT = 100
 DEFAULT_MARKER_SIZE = 1
 DEFAULT_LINE_WIDTH = 1.5
 DEFAULT_ALPHA = 1
@@ -70,6 +75,13 @@ H_PLANETS = [H_MERCURY, H_VENUS, H_EARTH, H_MARS,
 # ------------------------------
 mpl.rcParams['lines.markersize'] = DEFAULT_MARKER_SIZE
 mpl.rcParams['lines.linewidth'] = DEFAULT_LINE_WIDTH
+
+
+def truncate_colormap(cmap, minval=0.0, maxval=1.0, n=100):
+    new_cmap = colors.LinearSegmentedColormap.from_list(
+        'trunc({n},{a:.2f},{b:.2f})'.format(n=cmap.name, a=minval, b=maxval),
+        cmap(np.linspace(minval, maxval, n)))
+    return new_cmap
 
 
 def wrapTo360(phi):
@@ -143,8 +155,10 @@ def NEOSSatModelAEPlot(ax, grid, alim, elim):
     e_left = elim[0]-e_step/2
     e_right = elim[1]+e_step/2
 
+    new_cmap = truncate_colormap(plt.get_cmap(
+        DEFAULT_CMAP), CMAP_START, CMAP_END,  CMAP_BIT)
     heatmap = ax.imshow(grid, extent=[
-                        a_left, a_right, e_left, e_right], cmap=DEFAULT_CMAP)
+                        a_left, a_right, e_left, e_right], cmap=new_cmap)
     cbar = ax.figure.colorbar(heatmap, ax=ax)
 
     ax.set_xlabel("a")
@@ -167,8 +181,10 @@ def NEOSSatModelAIPlot(ax, grid, alim, Ilim):
     I_left = Ilim[0]-I_step/2
     I_right = Ilim[1]+I_step/2
 
+    new_cmap = truncate_colormap(plt.get_cmap(
+        DEFAULT_CMAP), CMAP_START, CMAP_END, CMAP_BIT)
     heatmap = ax.imshow(grid, extent=[
-                        a_left, a_right, I_left, I_right], cmap=DEFAULT_CMAP)
+                        a_left, a_right, I_left, I_right], cmap=new_cmap)
     cbar = ax.figure.colorbar(heatmap, ax=ax)
 
     ax.set_xlabel("a")

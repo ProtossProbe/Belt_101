@@ -34,6 +34,7 @@ def plotAlltp(name):
 def plotEMBelt(name):
     data = np.genfromtxt(name, delimiter=',',
                          skip_header=1, usecols=(1, 2, 3, 14))
+    # data = data[data[:, -1] <= 23]
     a, e, I, H = data[:, 0], data[:, 1], data[:, 2], data[:, -1]
 
     d = np.power(10, 3.1236 - 0.5 * np.log10(0.15) - 0.2 * H) * 1000
