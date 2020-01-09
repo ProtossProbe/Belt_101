@@ -5,10 +5,10 @@
 )---------------------------------------------------------------------
 ) 1 year = 365.25 days
  algorithm (MVS, BS, BS2, RADAU, HYBRID etc) = HYBRID
- start time (days)= 2458600.5d0
- stop time (days) = 1.66952209d12
- output interval (days) = 365250000.d0
- timestep (days) = 3.6525d0
+ start time (days)= 2458651.5d0
+ stop time (days) = 365.25d4
+ output interval (days) = 365.25d0
+ timestep (days) = 0.5d0
  accuracy parameter= 1.d-12
 )---------------------------------------------------------------------
 ) Integration options:
@@ -34,5 +34,5 @@
  < not used at present >
  < not used at present >
  Hybrid integrator changeover (Hill radii) = 3.d0
- number of timesteps between data dumps = 10000000
- number of timesteps between periodic effects = 1000000
+ number of timesteps between data dumps = 10000
+ number of timesteps between periodic effects = 10000
