@@ -64,4 +64,5 @@ clean:
 run:
 	./mercury6
 	./element6
+	./close6
 # --- end ---

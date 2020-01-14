@@ -98,18 +98,23 @@ mu = 1e-3
 # target2 = ["SATURN.txt", "SATURN_2.txt"]
 LOCATION = 'vatira/'
 
-target1 = ["2019LF6.out", "ZTF09k5.out"]
-target2 = "VENUS.out"
+target1 = ["ZTF09k5"]
+target2 = "MERCURY.out"
 fig1 = plt.figure()
 ax1 = fig1.add_subplot(111, projection='polar')
 ax1.set_xlim(0, 2*np.pi)
-# ax1.set_ylim(0, 0.2)
 
-fig2, (ax2, ax3, ax4, ax5, ax6) = plt.subplots(5, sharex=True)
+
+fig2, (ax2, ax3, ax4, ax5, ax6, ax7) = plt.subplots(6, sharex=True)
 
 for target in target1:
-    data_ast = np.loadtxt(LOCATION+target, skiprows=4)
+    data_ast = np.loadtxt(LOCATION+target+".out", skiprows=4)
     data_pla = np.loadtxt(LOCATION+target2, skiprows=4)
+    close_ast = np.loadtxt(LOCATION+target+".clo", skiprows=4, usecols=[0, 2])
+    close_ast_pl = np.loadtxt(LOCATION+target+".clo",
+                              skiprows=4, usecols=1, dtype="|U16")
+    close_ast_m = (close_ast[close_ast_pl == "MERCURY"])
+    close_ast_v = (close_ast[close_ast_pl == "VENUS"])
 
     num = data_ast.shape[0]
     print(num)
@@ -120,11 +125,18 @@ for target in target1:
     [t2, a2, e2, I2, ome2, Ome2, M2] = readElements_NoPos(
         data_pla, 0, num)
 
-    omeb = ome1 + Ome1
-    lambda_ast = omeb + M1
+    omeb1 = ome1 + Ome1
+    omeb2 = ome2 + Ome2
+    lambda_ast = omeb1 + M1
     lambda_pla = ome2 + Ome2 + M2
 
-    phi1 = wrapTo180(2*lambda_ast - 3*lambda_pla + 1*omeb)
+    phi1 = wrapTo180(2*lambda_ast - 3*lambda_pla + 1*omeb1)
+    omeb1 = wrapTo180(omeb1)
+    omeb_d = wrapTo180(omeb2-omeb1)
+    ome1 = wrapTo180(ome1)
+    Ome_d = wrapTo180(Ome1-Ome2)
+    Ome1 = wrapTo180(Ome1)
+
     omega = np.unwrap(ome1 * np.pi / 180) * 180 / np.pi
 
     size = 0.1
@@ -135,17 +147,33 @@ for target in target1:
     ax2.scatter(t1, a1, s=size, alpha=alp)
     ax2.set_ylabel('a')
     ax2.plot([0, t1[-1]], [0.552004, 0.552004], color='red')
+    ax2.set_xlim(0, t1[-1])
 
     ax3.scatter(t1, e1, s=size, alpha=alp)
     ax3.set_ylabel('e')
-    # ax3.set_yscale('log')
+    ax3.set_xlim(0, t1[-1])
+
     ax4.scatter(t1, I1, s=size, alpha=alp)
     ax4.set_ylabel('I')
-    ax5.scatter(t1, phi1, s=size, alpha=alp)
-    ax5.set_ylabel('phi')
-    # ax5.set_yscale('log')
+    ax4.set_xlim(0, t1[-1])
+
+    ax5.scatter(t1, Ome1, s=size, alpha=alp)
+    ax5.scatter(t1, Ome_d, s=size, alpha=alp)
+    ax5.set_ylabel('Ome')
+    ax5.set_xlim(0, t1[-1])
+    ax5.set_ylim(-180, 180)
     # ax5.plot([0, t1[-1]], [0.005, 0.005])
-    ax6.scatter(t1, ome1, s=size, alpha=alp)
-    ax6.set_ylabel('ome')
+    ax6.scatter(t1, omeb1, s=size, alpha=alp)
+    ax6.scatter(t1, omeb_d, s=size, alpha=alp)
+    ax6.set_ylabel('curly_pi')
+    ax6.set_xlim(0, t1[-1])
+    ax6.set_ylim(-180, 180)
+
+    ax7.scatter(close_ast_m[:, 0], close_ast_m[:, 1] /
+                hill[0], color='red', marker='+')
+    ax7.scatter(close_ast_v[:, 0], close_ast_v[:, 1] / hill[1],
+                color='orange', marker='+')
+    ax7.set_xlim(0, t1[-1])
+    ax7.set_ylim(0, 3)
 
 plt.show()
